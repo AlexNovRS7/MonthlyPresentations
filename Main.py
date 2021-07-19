@@ -9,7 +9,7 @@ from countries import countries
 
 selected_ctry = [str(key) for key in countries.keys()]
 
-if __name__ == '__CtryDecks__':  
+if __name__ == '__main__':  
 
     t1 = time.perf_counter()
     print("Number of selected countries: ", len(selected_ctry))
