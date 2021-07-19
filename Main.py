@@ -7,9 +7,13 @@ from multiprocessing import Pool, Process
 import CtryDecks
 from countries import countries
 
+import HRops
+
 selected_ctry = [str(key) for key in countries.keys()]
 
 if __name__ == '__main__':  
+
+    HRops.CreateReport()
 
     t1 = time.perf_counter()
     print("Number of selected countries: ", len(selected_ctry))
