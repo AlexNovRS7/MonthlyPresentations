@@ -658,11 +658,14 @@ X% (Y) was unsatisfied with Quality"""
     name = 'HR Operations Monthly Review ' + countries[ctry] + ' ' + calendar.month_name[lastMonth.month] + ' ' + str(
         lastMonth.year) + '.pptx'
 
-    if os.path.isdir(f"{os.getcwd()}\\Created\\"):
-        prs.save(f"{os.getcwd()}\\Created\\" + name)
-    else:
+    if not os.path.isdir(f"{os.getcwd()}\\Created\\"):
         os.mkdir(f"{os.getcwd()}\\Created\\")
-        prs.save(f"{os.getcwd()}\\Created\\" + name)
+        os.mkdir(f"{os.getcwd()}\\Created\\GovDecks\\")
+
+    if not os.path.isdir(f"{os.getcwd()}\\Created\\GovDecks\\"):
+        os.mkdir(f"{os.getcwd()}\\Created\\GovDecks\\")
+        
+    prs.save(f"{os.getcwd()}\\Created\\GovDecks\\" + name)
         
     t2 = time.perf_counter()
     print(countries[ctry], f' created. \t time: {round((t2 - t1), 2)} seconds')
