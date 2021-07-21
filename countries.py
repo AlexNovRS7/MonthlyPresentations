@@ -75,6 +75,16 @@ countries = {
     'TH': 'Thailand',
     'AE': 'United Arab Emirates',
     'VN': 'Vietnam',
+    '01': 'Cluster Brazil',
+    '02': 'Cluster China',
+    '03': 'Cluster Germany',
+    '04': 'Cluster Italy',
+    '05': 'Cluster Singapore',
+    '06': 'Cluster Sweden',
+    '07': 'Cluster Switzerland',
+    '08': 'Cluster UAE',
+    '09': 'Cluster UK',
+    '10': 'Cluster US'
              }
 
 

@@ -108,6 +108,7 @@ def CreateReport(ctry):
 
                 # edit look of the slide
                 chart = graphic_frame.chart
+                chart.has_title = False
                 plot = chart.plots[0]
                 plot.has_data_labels = True
                 data_labels = plot.data_labels
@@ -145,6 +146,7 @@ def CreateReport(ctry):
 
                 # edit look of the slide
                 chart = graphic_frame.chart
+                chart.has_title = False
                 plot = chart.plots[0]
                 plot.has_data_labels = True
                 data_labels = plot.data_labels
@@ -182,6 +184,7 @@ def CreateReport(ctry):
 
                 # edit look of the slide
                 chart = graphic_frame.chart
+                chart.has_title = False
                 plot = chart.plots[0]
                 plot.has_data_labels = True
                 data_labels = plot.data_labels
@@ -219,6 +222,7 @@ def CreateReport(ctry):
 
                 # edit look of the slide
                 chart = graphic_frame.chart
+                chart.has_title = False
                 plot = chart.plots[0]
                 plot.has_data_labels = True
                 data_labels = plot.data_labels
@@ -454,6 +458,7 @@ X% (Y) was unsatisfied with Quality"""
 
                 # edit look of the slide
                 chart = graphic_frame.chart
+                chart.has_title = False
                 plot = chart.plots[0]
                 plot.has_data_labels = True
                 data_labels = plot.data_labels
@@ -490,6 +495,7 @@ X% (Y) was unsatisfied with Quality"""
 
                 # edit look of the slide
                 chart = graphic_frame.chart
+                chart.has_title = False
                 plot = chart.plots[0]
                 plot.has_data_labels = True
                 data_labels = plot.data_labels
@@ -527,6 +533,7 @@ X% (Y) was unsatisfied with Quality"""
 
                 # edit look of the slide
                 chart = graphic_frame.chart
+                chart.has_title = False
                 plot = chart.plots[0]
                 plot.has_data_labels = True
                 plot.gap_width = 100
@@ -566,6 +573,7 @@ X% (Y) was unsatisfied with Quality"""
 
                 # edit look of the slide
                 chart = graphic_frame.chart
+                chart.has_title = False
                 chart.has_legend = True
                 chart.legend.position = XL_LEGEND_POSITION.BOTTOM
                 chart.legend.include_in_layout = False
@@ -620,6 +628,7 @@ X% (Y) was unsatisfied with Quality"""
                 
                 # edit look of the slide
                 chart = graphic_frame.chart
+                chart.has_title = False
                 chart.has_legend = True
                 chart.legend.position = XL_LEGEND_POSITION.BOTTOM
                 chart.legend.include_in_layout = False
