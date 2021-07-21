@@ -34,6 +34,7 @@ lastMonth = first - datetime.timedelta(days=1)
 # cursor = conn.cursor()
 
 def CreateReport(ctry):
+    t1 = time.perf_counter()
 
     conn = pyodbc.connect('Driver={SQL Server};'
                       'Server=XE-S-CWPDB01P.XE.ABB.COM;'
@@ -44,8 +45,6 @@ def CreateReport(ctry):
 
     global countries
     print("Creating: ", countries[ctry])
-    t1 = time.perf_counter()
-
     
     prs = Presentation(f"{os.getcwd()}\\templates\\Monthly_Ctry_Governance_TEMPLATE_2.0.pptx")
     slides = prs.slides

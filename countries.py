@@ -91,3 +91,9 @@ countries = {
 units = {'Hub_Office': 'HR Center',
          'Front_Office': 'Front Office'
          }
+
+Centers = {'KRK': 'Krakow',
+         'TLL': 'Tallinn',
+         'BGL': 'Bangalore',
+         'SPL': 'Sao Paolo'
+         }
