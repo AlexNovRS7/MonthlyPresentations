@@ -1,6 +1,7 @@
 from pptx import Presentation
 import calendar
 import os 
+import shutil
 
 from pptx.chart.data import ChartData
 from pptx.enum.chart import XL_CHART_TYPE
@@ -45,8 +46,8 @@ def CreateReport(ctry):
 
     global countries
     print("Creating: ", countries[ctry])
-    
-    prs = Presentation(f"{os.getcwd()}\\templates\\Monthly_Ctry_Governance_TEMPLATE_2.0.pptx")
+
+    prs = Presentation(f"{os.getcwd()}\\Created\\GovDecks\\{countries[ctry]}.pptx")
     slides = prs.slides
     
     # slide 1 (Cover)
@@ -665,15 +666,10 @@ X% (Y) was unsatisfied with Quality"""
     # save presentation
     name = 'HR Operations Monthly Review ' + countries[ctry] + ' ' + calendar.month_name[lastMonth.month] + ' ' + str(
         lastMonth.year) + '.pptx'
-
-    if not os.path.isdir(f"{os.getcwd()}\\Created\\"):
-        os.mkdir(f"{os.getcwd()}\\Created\\")
-        os.mkdir(f"{os.getcwd()}\\Created\\GovDecks\\")
-
-    if not os.path.isdir(f"{os.getcwd()}\\Created\\GovDecks\\"):
-        os.mkdir(f"{os.getcwd()}\\Created\\GovDecks\\")
         
+    # prs.save(f"{os.getcwd()}\\Created\\GovDecks\\" + name)
     prs.save(f"{os.getcwd()}\\Created\\GovDecks\\" + name)
+    os.remove(f"{os.getcwd()}\\Created\\GovDecks\\{countries[ctry]}.pptx")
         
     t2 = time.perf_counter()
     print(countries[ctry], f' created. \t time: {round((t2 - t1), 2)} seconds')
