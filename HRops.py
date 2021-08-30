@@ -1,5 +1,7 @@
 from pptx import Presentation
 import calendar
+import pandas.io.sql as psql
+import pandas as pd
 
 import os
 import pyodbc
@@ -11,6 +13,9 @@ from pptx.enum.chart import XL_CHART_TYPE
 from pptx.enum.chart import XL_LEGEND_POSITION
 from pptx.enum.chart import XL_LABEL_POSITION
 
+from pptx.enum.text import MSO_AUTO_SIZE
+from pptx.util import Inches
+
 from pptx.dml.color import RGBColor
 from pptx.util import Pt
 
@@ -19,6 +24,7 @@ from pptx.chart.data import CategoryChartData
 import time
 
 import HRcharts
+
 
 
 def CreateReport():
@@ -405,6 +411,76 @@ def CreateReport():
             
     print('Summary slides ready')
 
+    #slide 10 (RCA)
+    shapes = slides[9].shapes
+    shapes = [x for x in shapes if x.name[:3] == 'RCA']
+    query = """Select [snRCAFailureCat] as category, MONTH([snRCAOpened]) as month, count(*) as cnt
+  FROM [PG_AskHR_SnowDB].[dbo].[AskHR_RCA_UTC]
+  where MONTH([snRCAOpened]) in (Month(GETDATE()) - 1, Month(GETDATE()) - 2, Month(GETDATE()) - 3, Month(GETDATE()) - 4, Month(GETDATE()) - 5) 
+  and YEAR([snRCAOpened]) = Year(GETDATE())
+  group by [snRCAFailureCat], MONTH([snRCAOpened])"""
+
+    df = psql.read_sql(query, conn)
+
+    pivot = pd.pivot_table(df, values='cnt', index='category', columns='month', aggfunc='sum', fill_value = 0, margins=True,)
+    pivot.rename(lambda x: calendar.month_abbr[int(x)] if x != 'All' else x, axis = 'columns', inplace = True)
+    pivot.rename({'All': 'Total'}, inplace = True)
+
+    rows,cols = pivot.shape
+    
+
+    for shape in shapes:
+        if shape.name == 'RCAtable':
+            x, y, cx, cy = shape.left, shape.top, shape.width, shape.height
+            table = slides[9].shapes.add_table(rows+1,cols, x, y, cx, cy)
+            table = table.table
+            
+            for row, data in enumerate(pivot.iterrows()):
+                table.cell(row+1,0).text = str(data[0])
+                for col in range(1, pivot.shape[1]):
+                    table.cell(0, col).text = str(data[1].axes[0][col-1])
+                    table.cell(row+1,col).text = str(data[1][col-1])
+            
+            table.columns[0].width = Inches(3.0)
+            for col in range(1,6):
+                table.columns[col].width = Inches(0.6)
+            
+        if shape.name == 'RCAchart':
+            # define chart data
+            chart_data = ChartData()
+            chart_data.categories = [cat for cat in pivot.index if cat !='Total']
+            for col in pivot.columns[:-1]:
+                chart_data.add_series(f'{col}', pivot[f'{col}'][:-1])
+            # add chart to slide
+            x, y, cx, cy = shape.left, shape.top, shape.width, shape.height
+            slide = slides[9]
+            graphic_frame = slide.shapes.add_chart(
+                XL_CHART_TYPE.COLUMN_CLUSTERED, x, y, cx, cy, chart_data
+            )
+
+            # edit look of the slide
+            chart = graphic_frame.chart
+            plot = chart.plots[0]
+            plot.has_data_labels = True
+
+            chart.has_legend = True
+            chart.legend.position = XL_LEGEND_POSITION.TOP
+            chart.legend.include_in_layout = False
+            chart.legend.font.size = Pt(8)
+            
+            data_labels = plot.data_labels
+            data_labels.font.size = Pt(10)
+            data_labels.font.color.rgb = RGBColor(0, 0, 0)
+            data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
+           
+            value_axis = chart.value_axis
+            chart.value_axis.visible = False
+            value_axis.has_major_gridlines = False
+            tick_labels = value_axis.tick_labels
+            tick_labels.font.size = Pt(10)
+           
+            category_axis = chart.category_axis
+            category_axis.tick_labels.font.size = Pt(12)
 
     # slides 11-20 (CSAT)
     for i in range(10, 20):

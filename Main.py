@@ -10,7 +10,6 @@ import CtryDecks
 from countries import countries, Centers
 
 import HRops
-import HRCenters
 
 selected_ctry = [str(key) for key in countries.keys()]
 selected_HRCenter = [str(key) for key in Centers.keys()]
@@ -45,17 +44,11 @@ if __name__ == '__main__':
     with Pool(8) as p:
         p.map(CtryDecks.CreateReport, selected_ctry)
 
-    for HRCenter in selected_HRCenter:
-        HRCenters.CreateReport(HRCenter)
-    
         
-
-
-
 
     t2 = time.perf_counter()
     print('-' * 50)
-    print(f'Code Took:{t2 - t1} seconds. That is {round((t2 - t1), 2) / (len(selected_ctry) + 5)} seconds per presentation on average')
+    print(f'Code Took:{t2 - t1} seconds. That is {round((t2 - t1), 2) / (len(selected_ctry) + 1)} seconds per presentation on average')
 
     #CtryDecks.cursor.close()
     
