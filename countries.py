@@ -84,7 +84,8 @@ countries = {
     '07': 'Cluster Switzerland',
     '08': 'Cluster UAE',
     '09': 'Cluster UK',
-    '10': 'Cluster US'
+    '10': 'Cluster US',
+    '11': 'Cluster CSE'
              }
 
 

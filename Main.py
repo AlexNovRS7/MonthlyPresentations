@@ -34,15 +34,15 @@ if __name__ == '__main__':
         shutil.copy(template_file, dest_dir)
         os.rename(os.path.join(dest_dir,'Monthly_Ctry_Governance_TEMPLATE_2.0.pptx'), os.path.join(dest_dir,f"{countries[country]}.pptx"))
     
-    # for country in selected_ctry:
-    #     CtryDecks.CreateReport(country)
+    for country in selected_ctry:
+        CtryDecks.CreateReport(country)
 
     # from concurrent.futures import ThreadPoolExecutor
     # with ThreadPoolExecutor(max_workers = 3) as executor:
     #     executor.map(CtryDecks.CreateReport, selected_ctry)
 
-    with Pool(8) as p:
-        p.map(CtryDecks.CreateReport, selected_ctry)
+    # with Pool(8) as p:
+    #     p.map(CtryDecks.CreateReport, selected_ctry)
 
         
 
